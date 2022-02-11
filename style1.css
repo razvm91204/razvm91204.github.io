@@ -40,8 +40,8 @@ body {
 .main div.main-content-wrapper{
   display:flex;
   margin:15px;
-  margin-top:150px;
-  margin-left:550px;
+  margin-top:180px;
+  margin-left:700px;
   padding:10px;
   position:fixed;
   padding-bottom:0;
@@ -307,6 +307,29 @@ div.second-content-wrapper{
   cursor:default;
 }
 
+#slideshow-container2 {
+  justify-content: center;
+  max-height:600px;
+  max-width: 600px;
+  display:none;
+  border-radius:15px;
+  transition:0.2s;
+  position: relative;
+  margin: auto;
+  overflow:hidden;
+  object-fit: cover;
+}
+
+#slideshow-container2 img{
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  overflow:hidden;
+  justify-content: center;
+  align-content: center;
+  white-space: nowrap;
+  object-fit: cover;
+}
 
 #slideshow-container {
   justify-content: center;
