@@ -1,0 +1,319 @@
+<!DOCTYPE HTML>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+	<link rel="stylesheet" type="text/css" href="./style1.css" />
+  	<link rel="icon" href="./favico.ico" />
+ 	 <title>Anduț's Secret Place</title>	
+	  
+	</head>
+	<body>
+		<div class="nav" id="nav">
+			<a href="javascript:void(0)" class="closebtn" id="closebtn" onclick="closeNav()">&times;</a>
+			<a href="#poze"  onclick="openAndut(), setSlideAndut()" class="active">anduț</a>
+			<a href="#mirut" onclick="openMira(), setSlideMirut()" class="active">mira</a>
+			<a href="#open" onclick="openMe()" class="active">open me</a>
+			<a href="#notes" onclick="openNotes()" class="active"> notes </a>
+			<a href="#saveNotes" onclick="saveNotes()" id="afbtn" class="active">salveaza</a>
+			
+		</div>
+		
+		<div class="main" id="main">
+			<div class="topnav">
+				<div style="float:left" id="openbtn"  onclick="openNav()" >
+					<span > + </span>
+				</div>
+
+				<div style="margin-top:20px;font-size:25px;margin-right:20px;">
+						anduț's secret place	
+				</div>
+			</div>
+
+			<div class="main-content-wrapper">
+				<div>
+					<video id="vid" height=400 width=550 type="video/mp4" controls loop unmuted>
+						<source src="bday.mp4">
+					</video>
+				</div>
+			</div>
+		</div>
+		
+	
+	
+	<div class="notes">
+		<textarea id="aformname" style="display:none"  placeholder="Numele fișierului"></textarea><br>
+		<textarea id="aform"  placeholder="Scrie ce vrei tu :)"></textarea><br>
+	</div>
+	
+	<div id="second-content-wrapper" class="second-content-wrapper">
+		<div>
+			<span style="font-size:20px; align-content:center;font-family:'Courier New', Courier, monospace">
+				Love You &lt;3 <br><br>
+				Ești o persoană grozavă, ți-am spus-o de nenumărate ori și te ador. Ești grijulie, harnică, iubitoare și ești cea mai altruistă persoană pe care o cunosc.<br><br>
+				Am decis să-ți fac asta cadou, chiar dacă nu e mult, însă e din suflet și atunci când ai o zi nașpa să te întorci aici și să te eliberezi de emoțiile negative &#x3b;)<br><br>
+				Sper să-ți placă!<br>
+
+				La Mulți Ani, Anduț!<br><br> <b><em>Cu multă dragoste, Răzvan.</em></b> <br><br> <b><em>11/02/2022</em></b>
+			</span>
+		</div>
+	</div>
+
+	<div style="background-color: rgba(255, 255, 255, 0);font-family:'Courier New', Courier, monospace;" id="slideshow-container">
+		<div class="mySlides fade">
+			<img src="./anda/poze/1.jpg">
+		</div>
+		
+		<div class="mySlides fade">
+			<img src="./anda/poze/2.jpg">
+		</div>
+		<div class="mySlides fade">
+			<img src="./anda/poze/3.jpg">
+		</div>
+		
+		<div class="mySlides fade">
+			<img src="./anda/poze/4.jpg">
+		</div>
+		
+		<div class="mySlides fade">
+			<img src="./anda/poze/6.jpg">
+		</div>
+		<div class="mySlides fade">
+			<img src="./anda/poze/7.jpg">
+		</div>
+		
+		<div class="mySlides fade">
+			<img src="./anda/poze/8.jpg">
+		</div>
+		<div class="mySlides fade">
+			<img src="./anda/poze/9.png">
+		</div>
+		<div class="mySlides fade">
+			<img src="./anda/poze/10.png">
+		</div>
+		<div class="mySlides fade">
+			<img src="./anda/poze/11.png" >
+		</div>
+		<div class="mySlides fade">
+			<img src="./anda/poze/12.png">
+		</div>
+		<div class="mySlides fade">
+			<img src="./anda/poze/13.png">
+		</div>
+		<div class="mySlides fade">
+			<img src="./anda/poze/15.png">
+		</div>
+		<div class="mySlides fade">
+			<img src="./anda/poze/16.png">
+		</div>
+		<div class="mySlides fade">
+			<img src="./anda/poze/17.png">
+		</div>
+		<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+		<a class="next" onclick="plusSlides(1)">&#10095;</a>
+	</div>
+
+	<div style="background-color: rgba(255, 255, 255, 0);font-family:'Courier New', Courier, monospace;" id="slideshow-container2">
+		<div class="Slides fade">
+			<img src="./anda/mira/1.png">
+		</div>
+		<div class="Slides fade">
+			<img src="./anda/mira/2.png">
+		</div>
+		<div class="Slides fade">
+			<img src="./anda/mira/3.png">
+		</div>
+		<div class="Slides fade">
+			<img src="./anda/mira/4.png">
+		</div>
+		<div class="Slides fade">
+			<img src="./anda/mira/5.png">
+		</div>
+		<div class="Slides fade">
+			<img src="./anda/mira/6.png">
+		</div>
+		<div class="Slides fade">
+			<img src="./anda/mira/7.png">
+		</div>
+		<div class="Slides fade">
+			<img src="./anda/mira/8.png">
+		</div>
+		<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+		<a class="next" onclick="plusSlides(1)">&#10095;</a>
+	</div>
+<script>
+	var video=document.getElementById("vid");
+	video.muted=!video.muted;
+	function openNav() {
+		document.getElementById("main").style.opacity="3%"; 
+		document.getElementById("main").style.pointerEvents="none"; 
+		document.getElementById("afbtn").style.opacity="0%";
+		document.getElementById("afbtn").style.display="block";
+		document.getElementById("afbtn").style.visibility="hidden";
+		document.getElementById("aform").style.display="block";
+		document.getElementById("aformname").style.display="block";
+		document.getElementById("aform").style.visibility="hidden";
+		document.getElementById("aformname").style.visibility="hidden";
+		document.getElementById("second-content-wrapper").style.visibility="hidden";
+		document.getElementById("second-content-wrapper").style.opacity="0";
+		document.getElementById("second-content-wrapper").style.display="flex";
+		document.getElementById("slideshow-container").style.visibility="hidden";
+		document.getElementById("slideshow-container").style.opacity="0";
+		document.getElementById("slideshow-container").style.display="block";
+		document.getElementById("slideshow-container2").style.visibility="hidden";
+		document.getElementById("slideshow-container2").style.opacity="0";
+		document.getElementById("slideshow-container2").style.display="block";
+  		document.getElementById("nav").style.width = "156px";
+		document.getElementById("bg").style.opacity = "3%";
+		document.body.style.overflow="hidden";
+		document.body.style.overflowX="hidden";
+  		document.body.style.backgroundColor = "rgba(0,0,0,0.8)";
+	}
+	function saveNotes(){
+		var name = document.getElementById("aformname").value;
+		if(document.getElementById("aform").value!="" && document.getElementById("aformname").value!=""){
+			var text = document.getElementById("aform").value;
+			text = text.replace(/\n/g, "\r\n");
+			var blob = new Blob([text], {type: "text/plain"});
+			var anchor = document.createElement("a");
+			anchor.download = name;
+			anchor.href = window.URL.createObjectURL(blob);
+			anchor.target="_blank";
+			anchor.style.display="none";
+			anchor.style.visibility="hidden";
+			document.body.appendChild(anchor);
+			anchor.click();
+			document.body.removeChild(anchor);
+		}
+	}
+	function openNotes() {
+		document.getElementById("second-content-wrapper").style.opacity="0";
+		document.getElementById("second-content-wrapper").style.visibility="hidden";
+		document.getElementById("aform").style.visibility="visible";
+		document.getElementById("aform").style.opacity="100%";
+		document.getElementById("aformname").style.visibility="visible";
+		document.getElementById("aformname").style.opacity="100%";
+		document.getElementById("afbtn").style.display="block";
+		document.getElementById("afbtn").style.visibility="visible";	
+		document.getElementById("slideshow-container").style.opacity="0%";
+		document.getElementById("slideshow-container").style.visibility="hidden";
+		document.getElementById("slideshow-container2").style.opacity="0%";
+		document.getElementById("slideshow-container2").style.visibility="hidden";	
+		document.getElementById("afbtn").style.opacity="100%";
+		
+	}
+	function closeNav() {
+		document.getElementById("slideshow-container").style.opacity="0";
+		document.getElementById("main").style.pointerEvents="all";
+		document.getElementById("main").style.opacity="100%"; 
+		document.getElementById("vid").style.opacity="100%";
+		document.getElementById("aform").style.opacity="0%";
+		document.getElementById("aform").style.display="none";		
+		document.getElementById("slideshow-container2").style.opacity="0%";
+		document.getElementById("slideshow-container2").style.visibility="hidden";	
+		document.getElementById("aformname").style.opacity="0%";
+		document.getElementById("aformname").style.display="none";	
+		document.getElementById("afbtn").style.opacity="0%";
+		document.getElementById("afbtn").style.display="none";
+		document.getElementById("second-content-wrapper").style.opacity="0";
+		document.getElementById("second-content-wrapper").style.display="none";
+  		document.getElementById("nav").style.width = "0px";
+		document.getElementById("slideshow-container").style.visibility="hidden";
+		document.body.style.overflow="visible";
+ 		document.body.style.backgroundColor= "#111111";
+		
+	}
+
+	function openMe(){
+		document.getElementById("aform").style.opacity="0%";
+		document.getElementById("aform").style.visibility="hidden";		
+		document.getElementById("aformname").style.opacity="0%";
+		document.getElementById("aformname").style.visibility="hidden";	
+		document.getElementById("afbtn").style.opacity="0%";
+		document.getElementById("afbtn").style.visibility="hidden";	
+		document.getElementById("slideshow-container").style.opacity="0%";
+		document.getElementById("slideshow-container").style.visibility="hidden";
+		document.getElementById("slideshow-container2").style.opacity="0%";
+		document.getElementById("slideshow-container2").style.visibility="hidden";	
+		document.getElementById("second-content-wrapper").style.visibility="visible";
+		document.getElementById("second-content-wrapper").style.opacity="100";
+	}
+
+	function openAndut(){
+		document.getElementById("second-content-wrapper").style.opacity="0";
+		document.getElementById("second-content-wrapper").style.visibility="hidden";
+		document.getElementById("aform").style.opacity="0%";
+		document.getElementById("aform").style.visibility="hidden";		
+		document.getElementById("aformname").style.opacity="0%";
+		document.getElementById("aformname").style.visibility="hidden";	
+		document.getElementById("afbtn").style.opacity="0%";
+		document.getElementById("afbtn").style.visibility="hidden";
+		document.getElementById("slideshow-container2").style.opacity="0%";
+		document.getElementById("slideshow-container2").style.visibility="hidden";	
+		document.getElementById("slideshow-container2").style.display="none";	
+		document.getElementById("slideshow-container").style.display="block";	
+		document.getElementById("slideshow-container").style.visibility="visible";
+		document.getElementById("slideshow-container").style.opacity="100%";
+		
+	}
+		var slideIndex = 1;
+		showSlides(slideIndex);
+
+		// Next/previous controls
+		function plusSlides(n) {
+			showSlides(slideIndex += n);
+		}
+		var slides;
+		function setSlideAndut(){
+			slides = document.getElementsByClassName("mySlides");
+		}
+		function setSlideMirut(){
+			slides = document.getElementsByClassName("Slides");
+		}
+
+		function showSlides(n) {
+			var i;
+			if (n > slides.length) {slideIndex = 1}
+			if (n < 1) {slideIndex = slides.length}
+			for (i = 0; i < slides.length; i++) {
+				slides[i].style.display = "none";
+			}
+			slides[slideIndex-1].style.display = "block";
+		}
+	function openMira(){
+		document.getElementById("second-content-wrapper").style.opacity="0";
+		document.getElementById("second-content-wrapper").style.visibility="hidden";
+		document.getElementById("aform").style.opacity="0%";
+		document.getElementById("aform").style.visibility="hidden";		
+		document.getElementById("aformname").style.opacity="0%";
+		document.getElementById("aformname").style.visibility="hidden";	
+		document.getElementById("afbtn").style.opacity="0%";
+		document.getElementById("afbtn").style.visibility="hidden";	
+		document.getElementById("slideshow-container").style.opacity="0%";
+		document.getElementById("slideshow-container").style.visibility="hidden";
+		document.getElementById("slideshow-container").style.display="none";	
+		document.getElementById("slideshow-container2").style.display="block";	
+		document.getElementById("slideshow-container2").style.visibility="visible";
+		document.getElementById("slideshow-container2").style.opacity="100%";
+	}
+	/*
+		var sslideIndex = 1;
+		showSlidess(sslideIndex);
+
+		function plusSlidess(m) {
+			showSlidess(sslideIndex += m);
+		}
+		function showSlidess(m) {
+			var j;
+			var sslides = document.getElementsByClassName("Slides");
+			if (m > sslides.length) {sslideIndex = 1}
+			if (m < 1) {sslideIndex = sslides.length}
+			for (j = 0; j < sslides.length; j++) {
+				sslides[j].style.display = "none";
+			}
+			sslides[sslideIndex-1].style.display = "block";
+		}
+	*/
+	</script>
+	</body>
+	</html>
+		
