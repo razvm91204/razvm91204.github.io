@@ -1,0 +1,789 @@
+
+<!-- saved from url=(0014)about:internet -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Representation of numbers</title>
+<meta name="GENERATOR" content="Microsoft FrontPage 12.0">
+</head><body bgcolor="#FFFFFF" link="#000080"><x-sas-window top="37" bottom="601" left="223" right="791">
+
+
+
+
+
+<form action="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html" method="POST">
+  <div align="center"><center><p><b><font size="+2">Representation of Numbers</font></b> </p>
+  </center></div><p><b><font size="+2">Table of Contents</font></b></p><ul>
+    <li><font size="+1"><a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html#Intro">Introduction</a> (</font>the decimal number
+      system<font size="+1">)</font> </li>
+    <li><font size="+1"><a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html#posint">Binary representation of positive integers</a></font>
+    </li>
+    <li><font size="+1"><a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html#hex">Hexadecimal, Octal, Bits, Bytes and Words</a></font>
+    </li>
+    <li><font size="+1"><a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html#signint">Signed binary integers</a> (</font>2's
+      complement<font size="+1">)</font> </li>
+    <li><font size="+1"><a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html#posfrac">Positive binary fractions</a></font> </li>
+    <li><font size="+1"><a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html#signfrac">Signed binary fractions</a></font> </li>
+    <li><font size="+1"><a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html#A%20Quicker%20Method">A Quicker Method for
+      Converting Binary Fractions</a></font> </li>
+    <li><font size="+1"><a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html#float">Floating point numbers</a></font> </li>
+    <li><font size="+1"><a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html#single">IEEE single precision</a> floating point,
+      32 bits (</font>ANSI/IEEE Standard 743-1985<font size="+1">)</font> </li>
+    <li><font size="+1"><a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html#double">IEEE double precision</a> floating point</font>
+    </li>
+  </ul>
+  <p><a name="Intro"></a><b><font size="+2">Introduction</font></b> </p>
+  <blockquote>
+    <p>When working with any kind of digital electronics in which numbers are being
+    represented, it is important to understand the different ways numbers are represented in
+    these systems. Almost without fail, numbers are represented by two voltage levels which
+    can represent a one or a zero (an interesting exception to this rule is the new memory
+    device recently announced by Intel which uses one of four possible voltage levels, thereby
+    increasing the amount of information that can be stored in a given space). The number
+    system based on ones and zeroes is called the <i>bi</i>nary system (because there are only
+    two possible digits). Before discussing the binary system, a review of the <i>dec</i>imal
+    (ten possible digits) system is in order, because many of the concepts of the binary
+    system will be easier to understand when introduced alongside their decimal counterpart.</p>
+    <p>You should all have some familiarity with the decimal system. For instance, to
+    represent the positive integer one hundred and twenty-five as a decimal number, we can
+    write (with the postivie sign implied). The subscript 10 denotes the number as a base 10
+    (decimal) number.</p>
+    <div align="center"><center><p><a name="125"></a>125<sub><font size="-1">10</font></sub> =
+    1*100 + 2*10 + 5*1 = 1*10<sup><font size="-1">2</font></sup> + 2*10<sup><font size="-1">1</font></sup>
+    + 5*10<sup><font size="-1">0</font></sup></p>
+    </center></div><p>The rightmost digit is multiplied by 10<sup><font size="-1">0</font></sup>,
+    the next digit to the left is multiplied by 10<sup><font size="-1">1</font></sup>, and so
+    on. Each digit to the left has a multiplier that is 10 times the previous digit. Hopefully
+    this is all a review. Some observations:</p><ul>
+      <li>To multiply a number by 10 you can simply shift it to the left by one digit, and fill in
+        the rightmost digit with a 0 (moving the decimal place one to the right). To divide a
+        number by 10, simply shift the number to the right by one digit (moving the decimal place
+        one to the left).<br>
+      </li>
+      <li>To see how many digits a number needs, you can simply take the logarithm (base 10) of
+        the absolute value of the number, and add 1 to it. The integer part of the result is the
+        number of digits. For instance,<br>
+        log<sub><font size="-1"> 10</font></sub>(33) + 1 = 2.5.<br>
+        The integer part of that is 2, so 2 digits are needed.<br>
+      </li>
+      <li>With n digits, 10<sup>n</sup> unique numbers (from 0 to 10<sup>n</sup>-1) can be
+        represented. If n=3, 1000 (=10<sup>3</sup>) numbers can be represented 0-999.<br>
+      </li>
+      <li>Negative numbers are handled easily by simply putting a minus sign (-) in front of the
+        number. This does lead, however, to the somewhat awkward situation where 0=-0. We will
+        avoid this situation with binary representations, but with a little bit of effort. </li>
+    </ul>
+    <p>&nbsp;</p>
+    <p>Representing fractions is a simple extension of this idea. To wit, </p>
+    <div align="center"><center><p>25.43 <sub><font size="-1">10</font></sub> = 2*10 + 5*1 +
+    4*0.1 + 3*0.01 = 2*10<sup><font size="-1">1</font></sup> + 5*10<sup><font size="-1">0</font></sup>
+    + 4*10<sup><font size="-1">-1</font></sup>+ 3*10<sup><font size="-1">-2</font></sup> </p>
+    </center></div><p>The only pertinent observations here are:</p><ul>
+      <li>If there are m digits to the right of the decimal point, the smallest number that can be
+        represented is 10<sup>-m</sup>. For instance if m=4, the smallest number that can be
+        represented is 0.0001=10<sup>-4</sup>. </li>
+    </ul>
+    <p>After reading this dcoument you might want to learn something about <a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/BinaryMath.html">binary arithmetic</a>.</p>
+  </blockquote>
+  <p><b><font size="+1"><a name="posint"></a>Binary Representation of positive integers</font></b></p>
+  <blockquote>
+    <p>Binary representations of positive can be understood in the same way as their decimal
+    counterparts. For example</p>
+    <div align="center"><center><p>86<sub><font size="-1">10</font></sub> = 1*64 + 0*32 + 1*16
+    + 0*8 + 1*4 + 1*2 + 0*1<br>
+    or<br>
+    86<sub><font size="-1">10 </font></sub>= 1* 2<sup><font size="-1">6</font></sup> + 0* 2<sup><font size="-1">5</font></sup> + 1* 2<sup><font size="-1">4</font></sup> + 0* 2<sup><font size="-1">3</font></sup> + 1* 2<sup><font size="-1">2</font></sup> + 1* 2<sup><font size="-1">1</font></sup> + 0* 2<sup><font size="-1">0<br>
+    </font></sup>or<br>
+    86<sub><font size="-1">10 </font></sub>= 1010110 <sub><font size="-1">2</font></sub></p>
+    </center></div><p>The subscript 2 denotes a binary number. Each digit in a binary number
+    is called a bit. The number 1010110 is represented by 7 bits. Any number can be broken
+    down this way, by finding all of the powers of 2 that add up to the number in question (in
+    this case 2<sup><font size="-1">6</font></sup>, 2<sup><font size="-1">4</font></sup>, 2<sup><font size="-1">2</font></sup> and 2<sup><font size="-1">1</font></sup>). You can see this is
+    exactly analagous to the <a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html#125">decimal deconstruction</a> of the
+    number 125 that was done earlier. Likewise we can make a similar set of observations: </p><ul>
+      <li>To multiply a number by 2 you can simply shift it to the left by one digit, and fill in
+        the rightmost digit with a 0. To divide a number by 2, simply shift the number to the
+        right by one digit.<br>
+      </li>
+      <li>To see how many digits a number needs, you can simply take the logarithm (base 2) of the
+        number, and add 1 to it. The integer part of the result is the number of digits. For
+        instance,<br>
+        log<sub><font size="-1">2</font></sub>(86) + 1 = 7.426.<br>
+        The integer part of that is 7, so 7 digits are needed.<br>
+      </li>
+      <li>With n digits, 2<sup>n</sup> unique numbers (from 0 to 2<sup>n</sup>-1) can be
+        represented. If n=8, 256 (=2<sup>8</sup>) numbers can be represented 0-255. <p>&nbsp;</p>
+        <p><b><font size="-1">Exercises:</font></b>
+      </p></li>
+    </ul>
+    <blockquote>
+      <blockquote>
+            <table border="0" width="67%">
+              <tbody><tr>
+                <td width="74%"><font size="-1">Convert 125 from decimal to binary&nbsp;</font> </td>
+                <td width="26%"><font size="-1"> <select name="bropi1" size="1">
+              <option>Answer </option>
+              <option>1111101 </option>
+            </select></font> </td>
+              </tr>
+              <tr>
+                <td width="74%"><font size="-1">Convert 96 from decimal to binary&nbsp;</font> </td>
+                <td width="26%"><font size="-1"> <select name="bropi2" size="1">
+              <option>Answer </option>
+              <option>1100000 </option>
+            </select></font> </td>
+              </tr>
+              <tr>
+                <td width="74%"><font size="-1">Convert 10011 from binary to decimal&nbsp;</font> </td>
+                <td width="26%"><font size="-1"> <select name="bropi3" size="1">
+              <option>Answer </option>
+              <option>19 </option>
+            </select></font> </td>
+              </tr>
+              <tr>
+                <td width="74%"><font size="-1">In 'C', an unsigned integer is usually 16 bits. What is the largest
+            number that can be represented by an unsigned integer?&nbsp;</font> </td>
+                <td width="26%"><font size="-1"> <select name="bropi4" size="1">
+              <option>Answer </option>
+              <option>65535 = (2^16)-1 </option>
+            </select></font> </td>
+              </tr>
+              <tr>
+                <td width="74%"><font size="-1">Convert 37 to binary, shift it left by one and convert back to decimal.&nbsp;
+                  What is the result</font></td>
+                <td width="26%"><select size="1" name="bropi5">
+                    <option>Answer</option>
+                    <option>74 (=37*2)</option>
+                  </select></td>
+              </tr>
+            </tbody></table>
+      </blockquote>
+    </blockquote>
+        <p>&nbsp;
+  </p></blockquote>
+  <p>&nbsp;</p>
+  <p><a name="hex"></a><b><font size="+1">Hexadecimal, Octal, Bits, Bytes and Words.</font></b></p>
+  <blockquote>
+    <p>It is often convenient to handle groups of bits, rather than individually. The most
+    common grouping is 8 bits, which forms a byte. A single byte can represent 256 (2<sup><font size="-1">8</font></sup>) numbers. Memory capacity is usually referred to in bytes. Two
+    bytes is usually called a word, or short word (though word-length depends on the
+    application). A two-byte word is also the size that is usually used to represent integers
+    in programming languages. A long word is usually twice as long as a word. A less common
+    unit is the nibble which is 4 bits, or half of a byte.</p>
+    <p>It is cumbersome for humans to deal with writing, reading and remembering individual
+    bits, because it takes many of them to represent even fairly small numbers. A number of
+    different ways have been developed to make the handling of binary data easier for us. The
+    most common is hexadecimal. In hexadecimal notation, 4 bits (a nibble) are represented by
+    a single digit. There is obviously a problem with this since 4 bits gives 16 possible
+    combinations, and there are only 10 unique decimal digits, 0 to 9. This is solved by using
+    the first 6 letters (A..F) of the alphabet as numbers. The table shows the relationship
+    between decimal, hexadecimal and binary. </p>
+    <div align="center"><center><table border="1" cellspacing="1" cellpadding="0">
+      <tbody><tr>
+        <td width="60"><b>Decimal</b> </td>
+        <td width="85"><b>Hexadecimal</b> </td>
+        <td width="61"><b>Binary</b> </td>
+      </tr>
+      <tr>
+        <td width="60">0 </td>
+        <td width="85">0 </td>
+        <td width="61">0000 </td>
+      </tr>
+      <tr>
+        <td width="60">1 </td>
+        <td width="85">1 </td>
+        <td width="61">0001 </td>
+      </tr>
+      <tr>
+        <td width="60">2 </td>
+        <td width="85">2 </td>
+        <td width="61">0010 </td>
+      </tr>
+      <tr>
+        <td width="60">3 </td>
+        <td width="85">3 </td>
+        <td width="61">0011 </td>
+      </tr>
+      <tr>
+        <td width="60">4 </td>
+        <td width="85">4 </td>
+        <td width="61">0100 </td>
+      </tr>
+      <tr>
+        <td width="60">5 </td>
+        <td width="85">5 </td>
+        <td width="61">0101 </td>
+      </tr>
+      <tr>
+        <td width="60">6 </td>
+        <td width="85">6 </td>
+        <td width="61">0110 </td>
+      </tr>
+      <tr>
+        <td width="60">7 </td>
+        <td width="85">7 </td>
+        <td width="61">0111 </td>
+      </tr>
+      <tr>
+        <td width="60">8 </td>
+        <td width="85">8 </td>
+        <td width="61">1000 </td>
+      </tr>
+      <tr>
+        <td width="60">9 </td>
+        <td width="85">9 </td>
+        <td width="61">1001 </td>
+      </tr>
+      <tr>
+        <td width="60">10 </td>
+        <td width="85">A </td>
+        <td width="61">1010 </td>
+      </tr>
+      <tr>
+        <td width="60">11 </td>
+        <td width="85">B </td>
+        <td width="61">1011 </td>
+      </tr>
+      <tr>
+        <td width="60">12 </td>
+        <td width="85">C </td>
+        <td width="61">1100 </td>
+      </tr>
+      <tr>
+        <td width="60">13 </td>
+        <td width="85">D </td>
+        <td width="61">1101 </td>
+      </tr>
+      <tr>
+        <td width="60">14 </td>
+        <td width="85">E </td>
+        <td width="61">1110 </td>
+      </tr>
+      <tr>
+        <td width="60">15 </td>
+        <td width="85">F </td>
+        <td width="61">1111 </td>
+      </tr>
+    </tbody></table>
+    </center></div><p>There are some significant advantages to using hexadecimal when dealing
+    with electronic representations of numbers (if people had 16 fingers, we wouldn't be
+    saddled with the awkward decimal system). Using hexadecimal makes it very easy to convert
+    back and forth from binary because each hexadecimal digit corresponds to exactly 4 bits
+    (log<sub><font size="-1"> 2</font></sub>(16) = 4) and each byte is two hexadecimal digit.
+    In contrast, a decimal digit corresponds to log<sub><font size="-1">2</font></sub>(10) =
+    3.322 bits and a byte is 2.408 decimal digits. Clearly hexadecimal is better suited to the
+    task of representing binary numbers than is decimal.</p>
+    <p>As an example, the number CA3 <sub><font size="-1">16</font></sub> = 1100 1010 0011<sub><font size="-1">2</font></sub> (1100<sub><font size="-1">2</font></sub> 
+    = C<font size="-1"><sub>16
+    </sub></font>, 1010<sub><font size="-1">2</font></sub> = A<sub><font size="-1">16</font></sub>,
+    0011<sub><font size="-1">2</font></sub> = 3<sub><font size="-1"> 16</font></sub>). It is
+    convenient to write the binary number with spaces after every fourth bit to make it easier
+    to read. Converting back and forth to decimal is more difficult, but can be done in the <a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html#125">same way</a> as before.</p>
+    <div align="center"><center><p>3235<sub><font size="-1">10</font></sub> = C<sub><font size="-1">16</font></sub>*256 + A<sub><font size="-1">16</font></sub>*16 + 3<sub><font size="-1">16</font></sub>*1 = C<sub><font size="-1">16 </font></sub>*16<sup><font size="-1">2</font></sup> + A<sub><font size="-1">16 </font></sub>*16<sup><font size="-1">1</font></sup>
+    + 3<sub><font size="-1">16 </font></sub>*16<sup><font size="-1">0<br>
+    </font></sup>or<br>
+    3235<sub><font size="-1">10</font></sub> = 12*256 + 10*16 + 3*1 = 12*16<sup><font size="-1">2</font></sup> +10*16<sup><font size="-1">1</font></sup> +3*16<sup><font size="-1">0</font></sup> </p>
+    </center></div><p>Octal notation is yet another compact method for writing binary numbers.
+    There are 8 octal characters, 0...7. Obviously this can be represented by exactly 3 bits.
+    Two octal digits can represent numbers up to 64, and three octal digits up to 512. A byte
+    requires 2.667 octal digits. Octal used to be quiete common, it was the primary way of
+    doing low level I/O on some old DEC computers. It is much less common today but is still
+    used occasionally (e.g., to set read, write and execute permissions on Unix systems)</p>
+    <p><b>In summary:</b></p>
+    <blockquote>
+      <dl>
+        <dt>bit </dt>
+        <dd><font size="2">a single binary digit, either zero or one.</font> </dd>
+        <dt>byte </dt>
+        <dd><font size="2">8 bits, can represent positive numbers from 0 to 255.</font> </dd>
+        <dt>hexadecimal </dt>
+        <dd><font size="2">A representation of 4 bits by a single digit 0..9,A..F. In this way a byte can be
+          represented by two hexadecimal digits</font> </dd>
+        <dt>long word </dt>
+        <dd><font size="2">A long word is usually twice as long as a word.</font> </dd>
+        <dt>nibble </dt>
+        <dd><font size="2">4 bits, half of a byte.</font> </dd>
+        <dt>octal </dt>
+        <dd><font size="2">A representation of 3 bits by a single digit 0..7. This is used much less commonly than
+          it once was (early DEC computers used octal for much of their I/O)</font> </dd>
+        <dt>word </dt>
+        <dd><font size="2">Usually 16 bits, or two bytes. But a word can be almost any size, depending on the
+          application being considered -- 32 and 64 bits are common sizes</font> </dd>
+      </dl>
+    </blockquote>
+    <ul>
+      <b><font size="-1"></font></b><p><b><font size="-1">&nbsp;</font></b> </p>
+      <p><b><font size="-1">Exercises:</font></b>
+    </p><blockquote>
+      <table border="0" width="67%">
+        <tbody><tr>
+          <td width="74%"><font size="-1">Convert 2000 from decimal to hexadecimal&nbsp;</font> </td>
+          <td width="26%"><font size="-1"> <select name="hobbw1" size="1">
+            <option>Answer </option>
+            <option>7D0 </option>
+          </select></font> </td>
+        </tr>
+        <tr>
+          <td width="74%"><font size="-1">Convert 3C from hexadecimal to decimal&nbsp;</font> </td>
+          <td width="26%"><font size="-1"> <select name="hobbw2" size="1">
+            <option>Answer </option>
+            <option>60 </option>
+          </select></font> </td>
+        </tr>
+        <tr>
+          <td width="74%"><font size="-1">Convert 1010 0111 1011 from binary to hexadecimal&nbsp;</font> </td>
+          <td width="26%"><font size="-1"> <select name="hobbw3" size="1">
+            <option>Answer </option>
+            <option>A7B </option>
+          </select></font> </td>
+        </tr>
+        <tr>
+          <td width="74%"><font size="-1">Convert 7D0 from hexadecimal to binary&nbsp;</font> </td>
+          <td width="26%"><font size="-1"> <select name="hobbw4" size="1">
+            <option>Answer </option>
+            <option>0111 1101 0000 </option>
+          </select></font> </td>
+        </tr>
+        <tr>
+          <td width="74%"><font size="-1">If you shift a hexadecimal number to the left by one digit, how many
+          times larger is the resulting number?&nbsp;</font> </td>
+          <td width="26%"><font size="-1"> <select name="hobbw5" size="1">
+            <option>Answer </option>
+            <option>16 </option>
+          </select></font> </td>
+        </tr>
+      </tbody></table>
+      <p>&nbsp;
+    </p></blockquote>
+    </ul>
+  </blockquote>
+  <p>&nbsp;</p>
+  <p><a name="signint"></a><b><font size="+1">Signed Binary Integers</font></b></p>
+  <blockquote>
+    <p>It was noted previously that we will not be using a minus sign (-) to represent
+    negative numbers. We would like to represent our binary numbers with only two symbols, 0
+    and 1. There are a few ways to represent negative binary numbers. The simplest of these
+    methods is called ones complement, where the sign of a binary number is changed by simply
+    toggling each bit (0's become 1's and vice-versa). This has some difficulties, among them
+    the fact that zero can be represented in two different ways (for an eight bit number these
+    would be 0000 0000 and 1111 1111)., we will use a method called two's complement notation
+    which avoids the pitfalls of one's complement, but which is a bit more complicated.</p>
+    <p>To represent an n bit signed binary number the leftmost bit, has a special
+    significance. The difference between a signed and an unsigned number is given in the table
+    below for an 8 bit number.</p>
+    <table border="1" width="677">
+      <tbody><tr>
+        <th colspan="9" width="667">The value of bits in signed and unsigned binary numbers </th>
+      </tr>
+      <tr>
+        <td width="74">&nbsp;</td>
+        <td width="111">Bit 7 </td>
+        <td width="69">Bit 6 </td>
+        <td width="69">Bit 5 </td>
+        <td width="69">Bit 4 </td>
+        <td width="70">Bit 3 </td>
+        <td width="70">Bit 2 </td>
+        <td width="70">Bit 1 </td>
+        <td width="70">Bit 0 </td>
+      </tr>
+      <tr>
+        <td width="74">Unsigned </td>
+        <td width="111">2<sup><font size="-1">7 </font></sup>= 128 </td>
+        <td width="69">2<sup><font size="-1">6 </font></sup>= 64 </td>
+        <td width="69">2<sup><font size="-1">5 </font></sup>= 32 </td>
+        <td width="69">2<sup><font size="-1">4</font></sup>= 16 </td>
+        <td width="70">2<sup><font size="-1">3</font></sup>= 8 </td>
+        <td width="70">2<sup><font size="-1">2 </font></sup>= 4 </td>
+        <td width="70">2<sup><font size="-1">1 </font></sup>= 2 </td>
+        <td width="70">2<sup><font size="-1">0 </font></sup>= 1 </td>
+      </tr>
+      <tr>
+        <td width="74">Signed </td>
+        <td width="111">-(2<sup><font size="-1">7</font></sup>) = -128 </td>
+        <td width="69">2<sup><font size="-1">6 </font></sup>= 64 </td>
+        <td width="69">2<sup><font size="-1">5 </font></sup>= 32 </td>
+        <td width="69">2<sup><font size="-1">4 </font></sup>= 16 </td>
+        <td width="70">2<sup><font size="-1">3 </font></sup>= 8 </td>
+        <td width="70">2<sup><font size="-1">2 </font></sup>= 4 </td>
+        <td width="70">2<sup><font size="-1">1</font></sup>= 2 </td>
+        <td width="70">2<sup><font size="-1">0 </font></sup>= 1 </td>
+      </tr>
+    </tbody></table>
+    <p><br>
+    Let's look at how this changes the value of some binary numbers</p>
+    <div align="center"><center><table border="1" width="289">
+      <tbody><tr>
+        <td width="136">Binary </td>
+        <td width="64">Unsigned </td>
+        <td width="67">Signed </td>
+      </tr>
+      <tr>
+        <td width="136">0010 0011 </td>
+        <td width="64">35 </td>
+        <td width="67">35 </td>
+      </tr>
+      <tr>
+        <td width="136">1010 0011 </td>
+        <td width="64">163 </td>
+        <td width="67">-93 </td>
+      </tr>
+      <tr>
+        <td width="136">1111 1111 </td>
+        <td width="64">255 </td>
+        <td width="67">-1 </td>
+      </tr>
+      <tr>
+        <td width="136">1000 0000 </td>
+        <td width="64">128 </td>
+        <td width="67">-128 </td>
+      </tr>
+    </tbody></table>
+    </center></div><p>If Bit 7 is not set (as in the first example) the representation of
+    signed and unsigned numbers is the same. However, when Bit 7 is set, the number is always
+    negative. For this reason Bit 7 is sometimes called the sign bit. Signed numbers are added
+    in the same way as unsigned numbers, the only difference is in the way they are
+    interpreted. This is important for designers of arithmetic circuitry because it means that
+    numbers can be added by the same circuitry regardless of whether or not they are signed.</p>
+    <p>To form a two's complement number that is negative you simply take the corresponding
+    positive number, invert all the bits, and add 1. The example below illustrated this by
+    forming the number negative 35 as a two's complement integer:</p>
+    <blockquote>
+      <blockquote>
+        <p>35<sub><font size="-1">10</font></sub> = 0010 0011<sub><font size="-1">2</font></sub><br>
+        invert -&gt; 1101 1100<sub><font size="-1">2</font></sub><br>
+        add 1 -&gt; 1101 1101<sub><font size="-1">2</font></sub></p>
+      </blockquote>
+    </blockquote>
+    <p>So 1101 1101 is our two's complement representation of -35. We can check this by adding
+    up the contributions from the individual bits </p>
+    <div align="center"><center><p>1101 1101<sub><font size="-1">2 </font></sub>= -128 + 64 +
+    0 + 16 + 8 + 4 + 0 + 1 = -35.</p>
+    </center></div><p>The same procedure (invert and add 1) is used to convert the negative
+    number to its positive equivalent. If we want to know what what number is represented by
+    1111 1101, we apply the procedure again </p>
+    <blockquote>
+      <blockquote>
+        <p>? = 1111 1101<sub><font size="-1">2</font></sub><br>
+        invert -&gt; 0000 0010<sub><font size="-1">2</font></sub><br>
+        add 1 -&gt; 0000 0011<sub><font size="-1">2</font></sub></p>
+      </blockquote>
+    </blockquote>
+    <p>Since 0000 0011 represents the number 3, we know that 1111 1101 represents the number
+    -3.</p><ul>
+      <b><font size="-1"><p>Exercises:
+      </p><blockquote>
+        <table border="0" width="67%">
+          <tbody><tr>
+            <td width="74%"><font size="-1">Convert 1101 1101 from binary to decimal&nbsp;</font> </td>
+            <td width="26%"><font size="-1"> <select name="sbi1" size="1">
+            <option>Answer </option>
+            <option>-35 </option>
+          </select></font> </td>
+          </tr>
+          <tr>
+            <td width="74%"><font size="-1">Convert 0010 0010 from binary to decimal&nbsp;</font> </td>
+            <td width="26%"><font size="-1"> <select name="sbi2" size="1">
+            <option>Answer </option>
+            <option>34 </option>
+          </select></font> </td>
+          </tr>
+          <tr>
+            <td width="74%"><font size="-1">Convert -120 from decimal to binary&nbsp;</font> </td>
+            <td width="26%"><font size="-1"> <select name="D1" size="1">
+            <option selected="">Answer </option>
+            <option value="1000 1000">1000 1000</option>
+          </select></font> </td>
+          </tr>
+          <tr>
+            <td width="74%"><font size="-1">In 'C', a signed integer is usually 16 bits. What is the largest
+          positive number that can be represented?&nbsp;</font> </td>
+            <td width="26%"><font size="-1"> <select name="D2" size="1">
+            <option>Answer </option>
+            <option>32767 = (2^15)-1 </option>
+          </select></font> </td>
+          </tr>
+          <tr>
+            <td width="74%"><font size="-1">What is the largest negative number that can be represented?&nbsp;</font> </td>
+            <td width="26%"><font size="-1"> <select name="D3" size="1">
+            <option>Answer </option>
+            <option>-32768 = -(2^15) </option>
+          </select></font> </td>
+          </tr>
+        </tbody></table>
+      </blockquote>
+      </font></b><p><b><font size="-1"></font></b> 
+    </p></ul>
+    <p>Note that a number can be extended from 4 bits to 8 bits by simply repeating the
+    leftmost bit 4 times. Consider the following examples </p>
+    <div align="center"><center><table border="1" width="232">
+      <tbody><tr>
+        <td width="64" align="center"><b>Decimal</b> </td>
+        <td width="37"><b>4 bit</b> </td>
+        <td width="109"><b>8 bit</b> </td>
+      </tr>
+      <tr>
+        <td width="64" align="center">3 </td>
+        <td width="37">0011 </td>
+        <td width="109">0000 0011 </td>
+      </tr>
+      <tr>
+        <td width="64" align="center">-3 </td>
+        <td width="37">1101 </td>
+        <td width="109">1111 1101 </td>
+      </tr>
+      <tr>
+        <td width="64" align="center">7 </td>
+        <td width="37">0111 </td>
+        <td width="109">0000 0111 </td>
+      </tr>
+      <tr>
+        <td width="64" align="center">-5 </td>
+        <td width="37">1011 </td>
+        <td width="109">1111 1011 </td>
+      </tr>
+    </tbody></table>
+    </center></div><p>Let's carefully consider the last case which uses the number -5. As a 4
+    bit number this is represented as</p>
+    <div align="center"><center><p>1011 = -8 + 2 + 1 = -5</p>
+    </center></div><p>The 8 bit number is </p>
+    <div align="center"><center><p>1111 1011 = -128 + 64 + 32 + 16 + 8 + 2 + 1 = -5. </p>
+    </center></div><p>It is clear that in the second case the sum of the contributions from
+    the leftmost 5 bits (-128 + 64 + 32 + 16 + 8 = -8) is the same as the contribution from
+    the leftmost bit in the 4 bit representation (-8)</p>
+    <p>This process is refered to as sign-extension, and can be applied whenever a number is
+    to be represented by a larger number of bits. In the 320C50 Digital Signal Processor, this
+    typically occurs when moving a number from a 16 bit register to a 32 bit register. Whether
+    or not sign-extension is applied during such a move is determined by the <a href="https://www.swarthmore.edu/NatSci/echeeve1/Class/e71_98Web/320C50_Overview.html#SXM">sign-extension mode bit</a>. Note that to store a 32 bit
+    number in 16 bits you can simply truncate the upper 16 bits (as long as they are all the
+    same as the left-most bit in the resulting 16 bit number - i.e., the sign doesn't change).
+    </p>
+    <p>Most processors even have two separate instructions for shifting numbers to the right
+    (which, you will recall, is equivalent to dividing the number in half). The first
+    instruction is something like LSR (Logical Shift Right) which simply shifts the bits to
+    the right and usually fills a zero in as the lefmost bit. The second instruction is
+    something like ASR (Arithmetic Shift Right), which shifts all of the bits to the
+    right,
+    while keeping the leftmost bit unchanged. With ASR 1010 (-6) becomes 1101 (-3). Of course,
+    there is only one instruction for a left shift (since LSL is equivalent to ASL).</p>
+  </blockquote>
+  <p><b><font size="+1"><a name="posfrac"></a>Positive binary fractions</font></b></p>
+  <blockquote>
+    <p>The representation of unsigned binary fractions proceeds in exactly the same way as
+    decimal fractions. For example </p>
+    <div align="center"><center><p>0.625<sub><font size="-1">10</font></sub> = 1*0.5 + 0*0.25
+    + 1*0.125 = 1* 2<sup><font size="-1">-1</font></sup> + 0* 2<sup><font size="-1">-2</font></sup>
+    + 1* 2<sup><font size="-1">-3</font></sup> = 0.101<sub><font size="-1">2</font></sub></p>
+    </center></div><p>Each place to the right of the decimal point represents a negative power
+    of 2, just as for decimals they represent a negative power of 10. Likewise, if there are m
+    bits to the right of a decimal, the precision of the number is 2<sup><font size="-1">-m</font></sup>
+    (versus 10<sup><font size="-1">-m</font></sup> for decimal). Though it is possible to
+    represent numbers greater than one by having digits to the left of the decimal place we
+    will restrict ourselves to numbers less than one. These are commonly used by
+    Digital Signal Processors.</p>
+    <p>The largest number that can be represented by such a representation is 1-2<sup><font size="-1">-m </font></sup>, the smallest number is 2<sup><font size="-1">-m</font></sup>.
+    For a fraction with 15 bits of resolution this gives a range of approximately 0.99997 to
+    3.05E-5.</p>
+    <p>Note that this representationis easily extended to represent all positive numbers by
+    having the digits to the left of the decimal point represent the integer part, and the
+    digits to the right representing the fractional part. Thus</p>
+    <div align="center"><center><p>6.625<sub><font size="-1">10</font></sub> = 110.101<sub><font size="-1">2</font></sub></p>
+    </center></div><ul>
+      <b><font size="-1"><p><a name="Exercise Binary Fractions">Exercises:</a>
+      </p><blockquote>
+        <table border="0" width="67%">
+          <tbody><tr>
+            <td width="74%"><font size="-1">Convert 0.100 1001 from binary to decimal&nbsp;</font> </td>
+            <td width="26%"><font size="-1"> <select name="pbf1" size="1">
+            <option>Answer </option>
+            <option>0.5703125  </option>
+          </select></font> </td>
+          </tr>
+          <tr>
+            <td width="74%"><font size="-1">Convert 0.111 1111 from binary to decimal</font> </td>
+            <td width="26%"><font size="-1"> <select name="pbf2" size="1">
+            <option>Answer </option>
+            <option>0.9921875  </option>
+          </select></font> </td>
+          </tr>
+          <tr>
+            <td width="74%"><font size="-1">Convert 0.75 from decimal to a binary fraction&nbsp;</font> </td>
+            <td width="26%"><font size="-1"> <select name="pbf3" size="1">
+            <option>Answer </option>
+            <option>0.110 0000 </option>
+          </select></font> </td>
+          </tr>
+          <tr>
+            <td width="74%"><font size="-1">Convert 0.65625 from decimal to a binary fraction&nbsp;</font> </td>
+            <td width="26%"><font size="-1"> <select name="pbf4" size="1">
+            <option>Answer </option>
+            <option>0.101 0100 </option>
+          </select></font> </td>
+          </tr>
+          <tr>
+            <td width="74%"><font size="-1">Approximate 0.9 as a binary fraction (use 8 bits)&nbsp;</font> </td>
+            <td width="26%"><font size="-1"> <select name="pbf5" size="1">
+            <option>Answer </option>
+            <option>0.111 0011 </option>
+          </select></font> </td>
+          </tr>
+        </tbody></table>
+      </blockquote>
+      </font></b> 
+    </ul>
+  </blockquote>
+  <p><b><font size="+1"><a name="signfrac"></a>Signed binary fractions</font></b></p>
+  <blockquote>
+    <p>Signed binary fractions are formed much like signed integers. We will work with a
+    single digit to the left of the decimal point, and this will represent the number -1 (=
+    -(2<sup>0</sup>)). The rest of the representation of the fraction
+    remains unchanged. Therefore this leftmost bit represents a sign bit just as with two's
+    complement integers. If this bit is set, the number is negative, otherwise the number is
+    positive. The largest positive number that can be represented is still 1-2<sup>-m</sup> but the largest negative number is -1. The resolution is still
+    1-2<sup>-m</sup>.</p>
+    <p><a name="QNotation"></a>There is a terminology for naming the resolution of signed
+    fractions. If there are m bits to the right of the decimal point, the number is said to be
+    in Q<i>m</i> format. For a 16 bit number (15 bits to the right of the decimal point) this
+    results in Q15 notation.</p><ul>
+      <b><font size="-1"></font></b><p><b><font size="-1"><a name="Exercise Signed Binary Fractions">Exercises:</a></font></b> 
+    </p></ul>
+<div align="left">
+  <blockquote>
+    <blockquote>
+      <table border="0" width="67%">
+        <tbody><tr>
+          <td width="74%"><font size="-1">Convert 1.100 1001 from binary to decimal</font> </td>
+          <td width="26%"><font size="-1"> <select name="sbf1" size="1">
+            <option>Answer </option>
+            <option>-0.4296875 </option>
+          </select></font> </td>
+        </tr>
+        <tr>
+          <td width="74%"><font size="-1">Convert 1.111 1111 from binary to decimal</font> </td>
+          <td width="26%"><font size="-1"> <select name="sbf2" size="1">
+            <option>Answer </option>
+            <option>-0.0078125 </option>
+          </select></font> </td>
+        </tr>
+        <tr>
+          <td width="74%"><font size="-1">Convert -0.75 from decimal to a binary fraction&nbsp;</font> </td>
+          <td width="26%"><font size="-1"> <select name="sbf3" size="1">
+            <option>Answer </option>
+            <option>1.010 0000 </option>
+          </select></font> </td>
+        </tr>
+        <tr>
+          <td width="74%"><font size="-1">Convert -0.65625 from decimal to a binary fraction&nbsp;</font> </td>
+          <td width="26%"><font size="-1"> <select name="sbf4" size="1">
+            <option selected="">Answer </option>
+            <option>1.010 1100 </option>
+          </select></font> </td>
+        </tr>
+        <tr>
+          <td width="74%"><font size="-1">Approximate -0.9 as a binary fraction (use 8 bits)&nbsp;</font> </td>
+          <td width="26%"><font size="-1"> <select name="sbf5" size="1">
+            <option>Answer </option>
+            <option>1.000 1101 </option>
+          </select></font> </td>
+        </tr>
+      </tbody></table>
+    </blockquote>
+  </blockquote>
+</div>
+    <p>&nbsp;</p>
+    <p>Signed binary fractions are easily extended to include all numbers by representing the
+    number to the left of the decimal point as a 2's complement integer, and the number to the
+    right of the decimal point as a positive fraction. Thus</p>
+    <div align="center"><center><p>-6.625<sub><font size="-1">10</font></sub> = (-7+0.375)<sub><font size="-1">10</font></sub> = 1001.011<sub><font size="-1">2</font></sub></p>
+    </center></div><p>Note, that as with two's complement integers, the leftmost digit can be
+    repeated any number of times without affecting the value of the number.</p>
+  </blockquote>
+    <p><b><font size="+1"><a name="A Quicker Method">A Quicker Method </a>for
+    Converting Binary Fractions.</font></b></p>
+      <blockquote>
+    <p>Another way to convert Q<i>m</i>  numbers to decimal is to represent the
+    binary number as a signed integer, and to divide by 2<sup>m</sup>.&nbsp; To
+    convert a decimal number to Q<sup>m</sup>, multiply the number by 2<sup>m</sup>
+    and take the rightmost m digits.&nbsp; Note, this simply truncates the
+    number; it is more elegant, and accurate, but slightly more complicated, to
+    round the number.</p>
+    <p><b>Examples </b>(all Q7 numbers)<b>:</b></p>
+            <div align="center">
+          <center>
+          <table border="1" width="80%" height="279">
+            <tbody><tr>
+              <td width="23%" height="99">Convert 0.100 1001 to decimal.</td>
+              <td width="77%" height="99">Take the binary number 0100 1001 (=73<sub>10</sub>),
+                and divide by 2<sup>7</sup>=128.&nbsp; The answer is
+                73/128=0.5703125, which agrees with the result of the <a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html#Exercise%20Binary%20Fractions">previous
+                exercise</a> (Positive Binary Fractions).</td>
+            </tr>
+            <tr>
+              <td width="23%" height="117">Convert 1.100 1001&nbsp; to decimal.</td>
+              <td width="77%" height="117">Take the two's complements binary number 1100 1001
+                (=-55<sub>10</sub>), and divide by 128.&nbsp; The answer is
+                -0.4296875, which agrees with the result of the <a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html#Exercise%20Signed%20Binary%20Fractions"> previous
+                exercise</a> (Signed Binary Fractions).</td>
+            </tr>
+            <tr>
+              <td width="23%" height="20">Convert 0.9 to Q7 format</td>
+              <td width="77%" height="20">Multiply 0.9 by 128 to get&nbsp;
+                115.2.&nbsp; This is represented in binary as 111 0011, so the
+                Q7 representation is 0.111 0011.&nbsp; This agrees with the result of the <a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html#Exercise%20Binary%20Fractions">previous
+                exercise</a> (Positive Binary Fractions).</td>
+            </tr>
+            <tr>
+              <td width="23%" height="19">Convert -0.9 to Q7 format</td>
+              <td width="77%" height="19">Multiply -0.9 by 128 to get&nbsp;
+                -115.2.&nbsp; The Q7 representation is 1.000 1101.&nbsp; This agrees with the result of the
+                <a href="https://www.swarthmore.edu/NatSci/echeeve1/Ref/BinaryMath/NumSys.html#Exercise%20Signed%20Binary%20Fractions"> previous
+                exercise</a> (Signed Binary Fractions).</td>
+            </tr>
+          </tbody></table>
+          </center>
+        </div>
+     
+      </blockquote>
+  <p>&nbsp;</p>
+  <p><a name="float"></a><b><font size="+1">Floating point numbers</font></b></p>
+  <div align="center"><center><p><b><font color="#FF00DE">This section is not complete</font></b></p>
+  </center></div><p><a name="single"></a><b><font size="+1">IEEE single precision floating
+  point</font></b></p>
+  <div align="center"><center><p><b><font color="#FF00DE">This section is not complete</font></b></p>
+  </center></div><p><a name="double"></a><b><font size="+1">IEEE double precision floating
+  point</font></b></p>
+  <div align="center"><center><p><b><font color="#FF00DE">This section is not complete</font></b></p>
+  </center></div><hr align="center">
+  <!--webbot bot="Include" U-Include="../../AtEndOfPage.html" TAG="BODY" startspan -->
+<hr>
+  <table border="0" width="90%" align="center" style="height: 73px">
+  <tbody><tr>
+    <td width="30%" height="60" bordercolor="#FFFFFF" style="text-align:center; font-size:xx-large">
+        <a href="javascript:history.go(-1)" title="Back" style="text-decoration:none">
+		← 
+		</a>
+ </td><td width="30%" height="60" bordercolor="#800000" bordercolorlight="#800000" bordercolordark="#800000" style="text-align:center; " class="style1">
+      <p align="center" style="text-align:center"><font size="2"><i>
+      Comments or Questions?<br>
+      </i>
+      
+<script type="text/javascript">
+document.write("<a href=\"mailto:echeeve1@swarthmore.edu?subject=");
+document.write(document.referrer);
+document.write("\">Send me email</a>");
+</script><a href="mailto:echeeve1@swarthmore.edu?subject=https://www.google.com/">Send me email</a>
+
+      
+      
+     </font></p></td>
+    <td class="auto-style1" style="width: 30%">
+      <div class="auto-style1">
+      <font size="2"><a href="https://www.swarthmore.edu/NatSci/echeeve1/index.html">Erik Cheever<br>
+      </a><a href="http://www.engin.swarthmore.edu/">Engineering Department<br>
+      </a><a href="http://www.swarthmore.edu/">Swarthmore College</a></font></div>
+	  <p></p>
+    </td>
+    </tr></tbody></table>
+<!--webbot bot="Include" i-checksum="45103" endspan -->
+
+</form>
+&nbsp;
+
+</x-sas-window></body></html>
