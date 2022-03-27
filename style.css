@@ -50,4 +50,7 @@ a:hover{
       font-size:30px;
       height:20%;
     }
+    .span {
+        display:none;
+    }
   }
